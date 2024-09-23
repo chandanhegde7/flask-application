@@ -3,27 +3,51 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/chandanhegde7/flask-application.git' 
+                git 'https://github.com/your-username/your-flask-repo.git' // Replace with your Git repository URL
             }
         }
         stage('Install Dependencies') {
             steps {
-                sh 'pip install -r requirements.txt'
+                sh '''
+                    python3 -m venv venv
+                    . venv/bin/activate
+                    pip install -r requirements.txt
+                    # Check installed packages
+                    pip list
+                '''
+            }
+        }
+        stage('Check Python Version') {
+            steps {
+                sh '''
+                    . venv/bin/activate
+                    python --version
+                    which pytest
+                '''
             }
         }
         stage('Test') {
             steps {
-                sh 'pytest tests/'
+                sh '''
+                    . venv/bin/activate
+                    pytest tests/
+                '''
             }
         }
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t flask-app .'
+                sh '''
+                    . venv/bin/activate
+                    docker build -t flask-app .
+                '''
             }
         }
         stage('Deploy') {
             steps {
-                sh 'docker run -d -p 5000:5000 flask-app'
+                sh '''
+                    . venv/bin/activate
+                    docker run -d -p 5000:5000 flask-app
+                '''
             }
         }
     }
