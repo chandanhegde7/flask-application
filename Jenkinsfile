@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/your-username/your-flask-repo.git' // Replace with your Git repository URL
+                git 'https://github.com/chandanhegde7/flask-application.git' 
             }
         }
         stage('Install Dependencies') {
